@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-black text-white font-sans antialiased overflow-x-hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+
+  /* 11.8 - Focus states visíveis para acessibilidade */
+  :focus {
+    @apply outline-none;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-amber-500;
+  }
+
+  /* Links focáveis */
+  a:focus-visible {
+    @apply rounded-sm ring-2 ring-amber-500 ring-offset-2 ring-offset-black;
+  }
+
+  /* Botões focáveis */
+  button:focus-visible {
+    @apply ring-2 ring-amber-500 ring-offset-2 ring-offset-black;
+  }
+
+  /* Inputs focáveis */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    @apply ring-2 ring-amber-500 border-amber-500;
+  }
+
+  /* 11.6 - Garantir contraste mínimo para textos */
+  .text-low-contrast {
+    @apply text-white/70;
+  }
+
+  /* Reduzir movimento para usuários que preferem */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-black;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-amber-500/50 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-amber-500;
+  }
+}
+
+@layer components {
+  /* 3.9 - Section dividers with gradients */
+  .section-divider {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent;
+  }
+
+  .section-divider-red {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-red-600/30 to-transparent;
+  }
+
+  /* 3.10 - Light section background */
+  .bg-section-light {
+    @apply bg-gradient-to-b from-amber-50 via-white to-amber-50;
+  }
+
+  /* 3.11 - Vibrant red CTA button */
+  .btn-cta-red {
+    @apply bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300;
+    @apply hover:bg-red-500 hover:shadow-[0_0_30px_rgba(220,38,38,0.5)];
+    @apply active:scale-95;
+  }
+
+  /* Golden CTA button */
+  .btn-cta-gold {
+    @apply bg-amber-500 text-black font-bold py-3 px-6 rounded-lg transition-all duration-300;
+    @apply hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)];
+    @apply active:scale-95;
+  }
+
+  /* Outline button */
+  .btn-outline {
+    @apply border border-white/20 text-white py-3 px-6 rounded-lg transition-all duration-300;
+    @apply hover:border-amber-500 hover:text-amber-500;
+  }
+
+  /* 3.12 - Texture overlay */
+  .texture-overlay {
+    position: relative;
+  }
+
+  .texture-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Golden glow effect */
+  .glow-gold {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+  }
+
+  .glow-gold-hover:hover {
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+  }
+
+  /* Red glow effect */
+  .glow-red {
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.3);
+  }
+
+  .glow-red-hover:hover {
+    box-shadow: 0 0 40px rgba(220, 38, 38, 0.5);
+  }
+}
+
+@layer utilities {
+  /* Text gradient */
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent;
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Swiper custom styles */
+.swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #f59e0b !important;
+  width: 24px !important;
+  border-radius: 4px !important;
+}
