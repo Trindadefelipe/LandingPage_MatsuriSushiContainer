@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, ChevronRight, ShoppingBag } from 'lucide-react';
+import { useOrderModal } from '../context/OrderModalContext';
 
 const highlights = [
     {
@@ -31,6 +32,7 @@ const highlights = [
 
 export default function Highlights() {
     const [selectedItem, setSelectedItem] = useState(null);
+    const { openOrder } = useOrderModal();
 
     // 11.5 - Keyboard navigation for modal
     const handleKeyDown = useCallback((e) => {
@@ -95,7 +97,12 @@ export default function Highlights() {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             className="group cursor-pointer"
                             onClick={() => setSelectedItem(item)}
-                            onKeyDown={(e) => e.key === 'Enter' && setSelectedItem(item)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    setSelectedItem(item);
+                                }
+                            }}
                             tabIndex={0}
                             role="button"
                             aria-label={`Ver detalhes de ${item.name}`}
@@ -116,7 +123,9 @@ export default function Highlights() {
                                         alt={`${item.name} - Destaque do Matsuri Container Sushi`}
                                         className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 relative z-[1]"
                                         loading="lazy"
-                                        style={{ filter: 'none' }}
+                                        decoding="async"
+                                        width={1280}
+                                        height={853}
                                     />
 
                                     {/* 2.6 - Golden glow effect */}
@@ -185,6 +194,9 @@ export default function Highlights() {
                                         src={selectedItem.img}
                                         alt={selectedItem.name}
                                         className="w-full h-full object-cover"
+                                        decoding="async"
+                                        width={1280}
+                                        height={853}
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/50 md:block hidden" />
                                 </div>
@@ -200,7 +212,14 @@ export default function Highlights() {
                                     <p className="text-white/70 leading-relaxed mb-6">
                                         {selectedItem.description}
                                     </p>
-                                    <button className="flex items-center justify-center gap-2 py-3 px-6 rounded-lg bg-amber-500 text-black font-bold transition-all duration-300 hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] w-fit">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            openOrder(selectedItem.name);
+                                            setSelectedItem(null);
+                                        }}
+                                        className="flex items-center justify-center gap-2 py-3 px-6 rounded-lg bg-amber-500 text-black font-bold transition-all duration-300 hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] w-fit"
+                                    >
                                         <ShoppingBag size={18} />
                                         <span>Fazer Pedido</span>
                                     </button>

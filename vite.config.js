@@ -4,4 +4,19 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        // Separa bibliotecas grandes em chunks próprios: melhora o cache de longo prazo
+        // (mudanças no app não invalidam o vendor) e permite download paralelo.
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (id.includes('framer-motion')) return 'framer-motion'
+          if (id.includes('swiper')) return 'swiper'
+          if (id.includes('lucide-react')) return 'icons'
+          if (id.includes('react')) return 'react-vendor'
+        },
+      },
+    },
+  },
 })

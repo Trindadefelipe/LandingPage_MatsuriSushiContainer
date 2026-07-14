@@ -23,7 +23,10 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // `motion` é usado apenas via expressão de membro em JSX (<motion.div>), que o
+      // no-unused-vars do core do ESLint não detecta como uso — gerando falso positivo.
+      // Ignoramos esse identificador (e os iniciados em maiúscula) sem adicionar plugins/dependências.
+      'no-unused-vars': ['error', { varsIgnorePattern: '^(motion|[A-Z_])' }],
     },
   },
 ])

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { MapPin, Clock, Phone, MessageCircle, Navigation, Calendar } from 'lucide-react';
+import { site, whatsappUrl, telUrl, mapsDirectionsUrl, mapEmbedUrl } from '../config/site';
 
 const scheduleData = [
     { day: 'Segunda a Quinta', hours: '18h - 22:30h', open: true },
@@ -8,14 +9,13 @@ const scheduleData = [
 ];
 
 const contactInfo = {
-    address: 'Rua Prefeito Faria Lima, 1234',
-    neighborhood: 'Park Container',
-    city: 'Londrina - PR',
-    cep: '86000-000',
-    phone: '(43) 99999-9999',
-    whatsapp: '5543999999999',
-    mapUrl: 'https://www.google.com/maps/dir/?api=1&destination=Rua+Prefeito+Faria+Lima+1234+Londrina+PR',
-    embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3625.7!2d-51.1696!3d-23.3045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDE4JzE2LjIiUyA1McKwMTAnMTAuNiJX!5e0!3m2!1spt-BR!2sbr!4v1'
+    address: site.address.street,
+    neighborhood: site.address.neighborhood,
+    city: site.address.city,
+    cep: site.address.cep,
+    phone: site.phoneDisplay,
+    mapUrl: mapsDirectionsUrl,
+    embedUrl: mapEmbedUrl,
 };
 
 export default function Location() {
@@ -109,7 +109,7 @@ export default function Location() {
                         <div className="grid grid-cols-2 gap-4">
                             {/* 8.3 - Clickable phone */}
                             <a
-                                href={`tel:${contactInfo.phone.replace(/\D/g, '')}`}
+                                href={telUrl}
                                 className="flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-b from-neutral-900 to-black border border-white/10 text-white transition-all duration-300 hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(245,158,11,0.1)] group"
                             >
                                 <Phone size={20} className="text-amber-500 group-hover:scale-110 transition-transform" />
@@ -118,7 +118,7 @@ export default function Location() {
 
                             {/* 8.4 - WhatsApp link */}
                             <a
-                                href={`https://wa.me/${contactInfo.whatsapp}?text=Olá! Gostaria de fazer um pedido.`}
+                                href={whatsappUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center justify-center gap-2 py-4 rounded-xl bg-[#25D366] text-white font-medium transition-all duration-300 hover:bg-[#20BD5A] hover:shadow-[0_0_20px_rgba(37,211,102,0.3)]"
@@ -159,7 +159,7 @@ export default function Location() {
                         <div className="absolute top-4 left-4 z-10 px-4 py-2 bg-black/80 backdrop-blur-sm rounded-full border border-amber-500/30">
                             <p className="text-amber-500 text-sm font-medium flex items-center gap-2">
                                 <MapPin size={14} />
-                                Park Container Londrina
+                                {contactInfo.neighborhood} • Londrina
                             </p>
                         </div>
                     </motion.div>

@@ -8,16 +8,16 @@
     <title>Matsuri Container Sushi | Sushi Premium em Londrina - Delivery e Retirada</title>
 
     <!-- 4.3 - Meta description -->
-    <meta name="description" content="Matsuri Container Sushi - O melhor sushi de Londrina. Sashimis frescos, combinados especiais e rolls artesanais. Peça pelo WhatsApp ou iFood. Delivery e retirada no Park Container." />
+    <meta name="description" content="Matsuri Container Sushi - O melhor sushi de Londrina. Sashimis frescos, combinados especiais e rolls artesanais. Peça pelo WhatsApp ou iFood. Delivery e retirada no Alto da Boa Vista, Londrina." />
 
     <!-- 4.14 - Robots meta -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
     <!-- 4.13 - Canonical URL -->
-    <link rel="canonical" href="https://matsurisushi.com.br/" />
+    <link rel="canonical" href="https://landing-page-matsuri-sushi-containe.vercel.app/" />
 
     <!-- Keywords -->
-    <meta name="keywords" content="sushi londrina, restaurante japonês londrina, delivery sushi, sashimi, combinado japonês, matsuri sushi, park container londrina, comida japonesa" />
+    <meta name="keywords" content="sushi londrina, restaurante japonês londrina, delivery sushi, sashimi, combinado japonês, matsuri sushi, alto da boa vista londrina, comida japonesa" />
 
     <!-- Author -->
     <meta name="author" content="Matsuri Container Sushi" />
@@ -27,41 +27,32 @@
     <meta name="msapplication-TileColor" content="#0a0a0a" />
 
     <!-- 4.4 - Open Graph tags -->
-    <meta property="og:type" content="restaurant" />
+    <!-- og:type "website" evita a necessidade do namespace estendido "restaurant" (que exige xmlns e nem sempre valida). Os dados do restaurante ficam no JSON-LD abaixo. -->
+    <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Matsuri Container Sushi" />
     <meta property="og:title" content="Matsuri Container Sushi | Sushi Premium em Londrina" />
     <meta property="og:description" content="O melhor sushi de Londrina. Sashimis frescos, combinados especiais e rolls artesanais. Peça agora pelo WhatsApp ou iFood!" />
-    <meta property="og:url" content="https://matsurisushi.com.br/" />
-    <meta property="og:image" content="https://matsurisushi.com.br/img/og-image.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Matsuri Container Sushi - Pratos de sushi premium" />
+    <meta property="og:url" content="https://landing-page-matsuri-sushi-containe.vercel.app/" />
+    <!-- TODO(cliente): substituir por uma imagem dedicada 1200x630 em /img/og-image.jpg. Enquanto isso, usamos uma foto real existente. -->
+    <meta property="og:image" content="https://landing-page-matsuri-sushi-containe.vercel.app/img/combo2.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="853" />
+    <meta property="og:image:alt" content="Matsuri Container Sushi - Combinado de sushi premium" />
     <meta property="og:locale" content="pt_BR" />
-
-    <!-- Restaurant specific OG -->
-    <meta property="restaurant:contact_info:street_address" content="Rua Prefeito Faria Lima, 1234" />
-    <meta property="restaurant:contact_info:locality" content="Londrina" />
-    <meta property="restaurant:contact_info:region" content="PR" />
-    <meta property="restaurant:contact_info:country_name" content="Brasil" />
 
     <!-- 4.5 - Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@matsurisushi" />
-    <meta name="twitter:creator" content="@matsurisushi" />
     <meta name="twitter:title" content="Matsuri Container Sushi | Sushi Premium em Londrina" />
     <meta name="twitter:description" content="O melhor sushi de Londrina. Sashimis frescos, combinados especiais e rolls artesanais. Delivery e retirada!" />
-    <meta name="twitter:image" content="https://matsurisushi.com.br/img/og-image.jpg" />
-    <meta name="twitter:image:alt" content="Matsuri Container Sushi - Pratos de sushi premium" />
+    <meta name="twitter:image" content="https://landing-page-matsuri-sushi-containe.vercel.app/img/combo2.jpg" />
+    <meta name="twitter:image:alt" content="Matsuri Container Sushi - Combinado de sushi premium" />
 
-    <!-- 4.7 - Favicon -->
+    <!-- 4.7 - Favicon (apenas arquivos que existem em /public; PNGs 16/32/apple-touch podem ser gerados e reativados depois) -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- 4.12 - Preload critical resources -->
-    <link rel="preload" href="/img/hero-bg.jpg" as="image" />
+    <!-- 4.12 - Preload do recurso crítico do LCP (primeiro slide do hero) -->
+    <link rel="preload" href="/img/hero-bg.jpg" as="image" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -75,28 +66,23 @@
       "@type": "Restaurant",
       "name": "Matsuri Container Sushi",
       "image": [
-        "https://matsurisushi.com.br/img/logo-white.jpg",
-        "https://matsurisushi.com.br/img/hero-bg.jpg",
-        "https://matsurisushi.com.br/img/sashimi.jpg"
+        "https://landing-page-matsuri-sushi-containe.vercel.app/img/logo-white.jpg",
+        "https://landing-page-matsuri-sushi-containe.vercel.app/img/hero-bg.jpg",
+        "https://landing-page-matsuri-sushi-containe.vercel.app/img/sashimi.jpg"
       ],
       "description": "Restaurante japonês premium em Londrina. Sashimis frescos, combinados especiais e rolls artesanais preparados com ingredientes selecionados.",
-      "@id": "https://matsurisushi.com.br/",
-      "url": "https://matsurisushi.com.br/",
-      "telephone": "+55-43-99999-9999",
+      "@id": "https://landing-page-matsuri-sushi-containe.vercel.app/",
+      "url": "https://landing-page-matsuri-sushi-containe.vercel.app/",
+      "telephone": "+55-43-99691-8580",
       "priceRange": "$$",
       "servesCuisine": ["Japonesa", "Sushi", "Sashimi"],
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Rua Prefeito Faria Lima, 1234",
+        "streetAddress": "Av. Saul Elkind, 3665 - Alto da Boa Vista",
         "addressLocality": "Londrina",
         "addressRegion": "PR",
-        "postalCode": "86000-000",
+        "postalCode": "86030-030",
         "addressCountry": "BR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -23.3045,
-        "longitude": -51.1696
       },
       "openingHoursSpecification": [
         {
@@ -112,20 +98,13 @@
           "closes": "23:00"
         }
       ],
-      "menu": "https://matsurisushi.com.br/#menu",
-      "acceptsReservations": "True",
+      "menu": "https://www.ifood.com.br/delivery/londrina-pr/matsuri-conteiner-sushi-conjunto-vivi-xavier/0f644d2d-c535-4342-abd1-c7460901e142",
       "hasDeliveryMethod": {
         "@type": "DeliveryMethod",
         "name": "Delivery via WhatsApp e iFood"
       },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "312"
-      },
       "sameAs": [
-        "https://www.instagram.com/matsurisushi",
-        "https://www.facebook.com/matsurisushi"
+        "https://www.instagram.com/matsuricontainersushi"
       ]
     }
     </script>
@@ -139,7 +118,7 @@
         "@type": "ListItem",
         "position": 1,
         "name": "Início",
-        "item": "https://matsurisushi.com.br/"
+        "item": "https://landing-page-matsuri-sushi-containe.vercel.app/"
       }]
     }
     </script>

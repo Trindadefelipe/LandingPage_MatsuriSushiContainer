@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://landing-page-matsuri-sushi-containe.vercel.app/sitemap.xml
