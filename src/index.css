@@ -5,10 +5,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 88px;
   }
 
   body {
     @apply bg-black text-white font-sans antialiased overflow-x-hidden;
+    min-width: 320px;
   }
 
   h1,
@@ -151,6 +153,35 @@
 }
 
 @layer utilities {
+  .gpu-layer {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  .perf-card {
+    contain: layout paint;
+  }
+
+  .content-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 760px;
+  }
+
+  .mobile-safe-modal {
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
   /* Text gradient */
   .text-gradient-gold {
     @apply bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent;
@@ -182,4 +213,33 @@
   background: #f59e0b !important;
   width: 24px !important;
   border-radius: 4px !important;
+}
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  .mobile-hide-glow {
+    display: none !important;
+  }
+
+  .mobile-no-backdrop {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .mobile-no-shadow {
+    box-shadow: none !important;
+  }
+
+  .touch-static img {
+    transform: none !important;
+    transition-duration: 180ms !important;
+  }
+
+  .content-section {
+    contain-intrinsic-size: 920px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gpu-layer {
+    will-change: auto;
+  }
 }
