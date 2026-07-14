@@ -4,6 +4,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ShoppingBag, Sparkles, Flame, Star } from 'lucide-react';
 import { ifoodUrl } from '../config/site';
+import { useOrderModal } from '../context/OrderModalContext';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -87,6 +88,7 @@ const categories = [
 export default function Menu() {
     const [activeCategory, setActiveCategory] = useState('todos');
     const swiperRef = useRef(null);
+    const { openOrder } = useOrderModal();
 
     const filteredItems = activeCategory === 'todos'
         ? menuItems
@@ -246,8 +248,12 @@ export default function Menu() {
                                             {item.description}
                                         </p>
 
-                                        {/* 1.7 - CTA Button */}
-                                        <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-transparent border border-amber-500/50 text-amber-500 font-medium text-sm transition-all duration-300 hover:bg-amber-500 hover:text-black hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] group/btn">
+                                        {/* 1.7 - CTA Button — abre o pop-up de escolha do canal (WhatsApp/iFood) */}
+                                        <button
+                                            type="button"
+                                            onClick={() => openOrder(item.name)}
+                                            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-transparent border border-amber-500/50 text-amber-500 font-medium text-sm transition-all duration-300 hover:bg-amber-500 hover:text-black hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] group/btn"
+                                        >
                                             <ShoppingBag size={16} className="transition-transform group-hover/btn:scale-110" />
                                             <span>Fazer Pedido</span>
                                         </button>

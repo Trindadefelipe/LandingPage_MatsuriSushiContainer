@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Utensils, X, ShoppingBag, Check } from 'lucide-react';
+import { useOrderModal } from '../context/OrderModalContext';
 
 const combos = [
     {
@@ -37,6 +38,7 @@ const combos = [
 
 export default function Combos() {
     const [selectedCombo, setSelectedCombo] = useState(null);
+    const { openOrder } = useOrderModal();
 
     // 11.5 - Keyboard navigation for modal
     const handleKeyDown = useCallback((e) => {
@@ -156,7 +158,10 @@ export default function Combos() {
                                         >
                                             Ver Detalhes
                                         </button>
-                                        <button className={`flex-1 py-3 rounded-lg font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
+                                        <button
+                                            type="button"
+                                            onClick={() => openOrder(combo.name)}
+                                            className={`flex-1 py-3 rounded-lg font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
                                             combo.featured
                                                 ? 'bg-amber-500 text-black hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.5)]'
                                                 : 'bg-red-600 text-white hover:bg-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.5)]'
@@ -249,7 +254,14 @@ export default function Combos() {
                                         </ul>
                                     </div>
 
-                                    <button className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-amber-500 text-black font-bold transition-all duration-300 hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            openOrder(selectedCombo.name);
+                                            setSelectedCombo(null);
+                                        }}
+                                        className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-amber-500 text-black font-bold transition-all duration-300 hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]"
+                                    >
                                         <ShoppingBag size={18} />
                                         <span>Fazer Pedido</span>
                                     </button>
