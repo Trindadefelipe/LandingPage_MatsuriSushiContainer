@@ -95,7 +95,12 @@ export default function Highlights() {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             className="group cursor-pointer"
                             onClick={() => setSelectedItem(item)}
-                            onKeyDown={(e) => e.key === 'Enter' && setSelectedItem(item)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    setSelectedItem(item);
+                                }
+                            }}
                             tabIndex={0}
                             role="button"
                             aria-label={`Ver detalhes de ${item.name}`}
@@ -116,7 +121,9 @@ export default function Highlights() {
                                         alt={`${item.name} - Destaque do Matsuri Container Sushi`}
                                         className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 relative z-[1]"
                                         loading="lazy"
-                                        style={{ filter: 'none' }}
+                                        decoding="async"
+                                        width={1280}
+                                        height={853}
                                     />
 
                                     {/* 2.6 - Golden glow effect */}
@@ -185,6 +192,9 @@ export default function Highlights() {
                                         src={selectedItem.img}
                                         alt={selectedItem.name}
                                         className="w-full h-full object-cover"
+                                        decoding="async"
+                                        width={1280}
+                                        height={853}
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/50 md:block hidden" />
                                 </div>

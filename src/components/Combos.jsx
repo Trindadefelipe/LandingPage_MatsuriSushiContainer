@@ -120,6 +120,9 @@ export default function Combos() {
                                         alt={`${combo.name} - Combo especial do Matsuri Container Sushi`}
                                         className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 relative z-[1]"
                                         loading="lazy"
+                                        decoding="async"
+                                        width={1280}
+                                        height={853}
                                     />
                                     <div className="absolute inset-0 z-[2] bg-gradient-to-t from-black via-black/30 to-transparent" />
 
@@ -206,6 +209,9 @@ export default function Combos() {
                                         src={selectedCombo.img}
                                         alt={selectedCombo.name}
                                         className="w-full h-full object-cover"
+                                        decoding="async"
+                                        width={1280}
+                                        height={853}
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/50 md:block hidden" />
                                 </div>

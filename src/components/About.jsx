@@ -55,6 +55,9 @@ export default function About() {
                                         alt="Logo Matsuri Container Sushi - Restaurante Japonês Premium em Londrina"
                                         className="w-full max-w-md mx-auto"
                                         loading="lazy"
+                                        decoding="async"
+                                        width={828}
+                                        height={807}
                                     />
                                 </div>
                             </div>

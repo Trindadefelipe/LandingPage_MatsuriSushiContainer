@@ -27,22 +27,18 @@
     <meta name="msapplication-TileColor" content="#0a0a0a" />
 
     <!-- 4.4 - Open Graph tags -->
-    <meta property="og:type" content="restaurant" />
+    <!-- og:type "website" evita a necessidade do namespace estendido "restaurant" (que exige xmlns e nem sempre valida). Os dados do restaurante ficam no JSON-LD abaixo. -->
+    <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Matsuri Container Sushi" />
     <meta property="og:title" content="Matsuri Container Sushi | Sushi Premium em Londrina" />
     <meta property="og:description" content="O melhor sushi de Londrina. Sashimis frescos, combinados especiais e rolls artesanais. Peça agora pelo WhatsApp ou iFood!" />
     <meta property="og:url" content="https://matsurisushi.com.br/" />
-    <meta property="og:image" content="https://matsurisushi.com.br/img/og-image.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Matsuri Container Sushi - Pratos de sushi premium" />
+    <!-- TODO(cliente): substituir por uma imagem dedicada 1200x630 em /img/og-image.jpg. Enquanto isso, usamos uma foto real existente. -->
+    <meta property="og:image" content="https://matsurisushi.com.br/img/combo2.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="853" />
+    <meta property="og:image:alt" content="Matsuri Container Sushi - Combinado de sushi premium" />
     <meta property="og:locale" content="pt_BR" />
-
-    <!-- Restaurant specific OG -->
-    <meta property="restaurant:contact_info:street_address" content="Rua Prefeito Faria Lima, 1234" />
-    <meta property="restaurant:contact_info:locality" content="Londrina" />
-    <meta property="restaurant:contact_info:region" content="PR" />
-    <meta property="restaurant:contact_info:country_name" content="Brasil" />
 
     <!-- 4.5 - Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -50,18 +46,15 @@
     <meta name="twitter:creator" content="@matsurisushi" />
     <meta name="twitter:title" content="Matsuri Container Sushi | Sushi Premium em Londrina" />
     <meta name="twitter:description" content="O melhor sushi de Londrina. Sashimis frescos, combinados especiais e rolls artesanais. Delivery e retirada!" />
-    <meta name="twitter:image" content="https://matsurisushi.com.br/img/og-image.jpg" />
-    <meta name="twitter:image:alt" content="Matsuri Container Sushi - Pratos de sushi premium" />
+    <meta name="twitter:image" content="https://matsurisushi.com.br/img/combo2.jpg" />
+    <meta name="twitter:image:alt" content="Matsuri Container Sushi - Combinado de sushi premium" />
 
-    <!-- 4.7 - Favicon -->
+    <!-- 4.7 - Favicon (apenas arquivos que existem em /public; PNGs 16/32/apple-touch podem ser gerados e reativados depois) -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- 4.12 - Preload critical resources -->
-    <link rel="preload" href="/img/hero-bg.jpg" as="image" />
+    <!-- 4.12 - Preload do recurso crítico do LCP (primeiro slide do hero) -->
+    <link rel="preload" href="/img/hero-bg.jpg" as="image" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -113,15 +106,9 @@
         }
       ],
       "menu": "https://matsurisushi.com.br/#menu",
-      "acceptsReservations": "True",
       "hasDeliveryMethod": {
         "@type": "DeliveryMethod",
         "name": "Delivery via WhatsApp e iFood"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "312"
       },
       "sameAs": [
         "https://www.instagram.com/matsurisushi",

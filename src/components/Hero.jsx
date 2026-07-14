@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronDown, ChevronLeft, ChevronRight, ShoppingBag, Clock } from 'lucide-react';
 
 // 6.4 - Banner slides data
@@ -33,15 +33,35 @@ const slides = [
 export default function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [direction, setDirection] = useState(0);
+    const prefersReducedMotion = useReducedMotion();
 
-    // Auto-advance slides
+    // Auto-advance slides — respeita prefers-reduced-motion e pausa quando a aba está oculta
     useEffect(() => {
-        const timer = setInterval(() => {
-            setDirection(1);
-            setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }, 6000);
-        return () => clearInterval(timer);
-    }, []);
+        if (prefersReducedMotion) return; // sem rotação automática para quem prefere menos movimento
+
+        let timer;
+        const stop = () => {
+            if (timer) {
+                clearInterval(timer);
+                timer = undefined;
+            }
+        };
+        const start = () => {
+            stop();
+            timer = setInterval(() => {
+                setDirection(1);
+                setCurrentSlide((prev) => (prev + 1) % slides.length);
+            }, 6000);
+        };
+        const handleVisibility = () => (document.hidden ? stop() : start());
+
+        start();
+        document.addEventListener('visibilitychange', handleVisibility);
+        return () => {
+            stop();
+            document.removeEventListener('visibilitychange', handleVisibility);
+        };
+    }, [prefersReducedMotion]);
 
     const goToSlide = (index) => {
         setDirection(index > currentSlide ? 1 : -1);
@@ -98,8 +118,8 @@ export default function Hero() {
                     <motion.div
                         className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
                         style={{ backgroundImage: `url('${slides[currentSlide].image}')` }}
-                        animate={{ scale: [1.05, 1.1] }}
-                        transition={{ duration: 6, ease: "linear" }}
+                        animate={prefersReducedMotion ? undefined : { scale: [1.05, 1.1] }}
+                        transition={{ duration: 6, ease: 'linear' }}
                     />
                 </motion.div>
             </AnimatePresence>

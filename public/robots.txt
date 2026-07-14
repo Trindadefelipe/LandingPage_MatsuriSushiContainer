@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://matsurisushi.com.br/sitemap.xml

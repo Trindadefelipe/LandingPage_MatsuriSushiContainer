@@ -1,12 +1,11 @@
 import { useState, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ShoppingBag, Sparkles, Flame, Star } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import 'swiper/css/effect-fade';
 
 const menuItems = [
     {
@@ -181,7 +180,7 @@ export default function Menu() {
                     <Swiper
                         key={activeCategory}
                         onSwiper={(swiper) => (swiperRef.current = swiper)}
-                        modules={[Navigation, Pagination, Autoplay, EffectFade]}
+                        modules={[Navigation, Pagination, Autoplay]}
                         spaceBetween={24}
                         slidesPerView={1}
                         breakpoints={{
@@ -223,6 +222,9 @@ export default function Menu() {
                                             alt={`${item.name} - Prato japonês do Matsuri Container Sushi`}
                                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
                                             loading="lazy"
+                                            decoding="async"
+                                            width={1280}
+                                            height={853}
                                         />
 
                                         {/* 1.9 - Improved hover overlay with golden glow */}

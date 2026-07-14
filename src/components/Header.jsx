@@ -10,33 +10,49 @@ const navLinks = [
     { href: '#localizacao', label: 'Localização' },
 ];
 
+// Canal de pedido real usado no projeto (mesmo número/mensagem do FAB e da seção Localização).
+// TODO(cliente): substituir o número placeholder pelo WhatsApp real do restaurante.
+const WHATSAPP_ORDER_URL = `https://wa.me/5543999999999?text=${encodeURIComponent(
+    'Olá! Gostaria de fazer um pedido no Matsuri Container Sushi.'
+)}`;
+
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('');
 
     useEffect(() => {
+        // Estado "scrolled": listener passivo + rAF (sem leituras de layout a cada evento de scroll)
+        let ticking = false;
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-
-            // 5.6 - Active section indicator
-            const sections = navLinks.map(link => link.href.replace('#', ''));
-            const scrollPosition = window.scrollY + 100;
-
-            for (const section of sections) {
-                const element = document.getElementById(section);
-                if (element) {
-                    const { offsetTop, offsetHeight } = element;
-                    if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-                        setActiveSection(section);
-                        break;
-                    }
-                }
-            }
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(() => {
+                setScrolled(window.scrollY > 50);
+                ticking = false;
+            });
         };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        // 5.6 - Seção ativa via IntersectionObserver (evita layout thrashing com offsetTop/offsetHeight)
+        const sections = navLinks
+            .map((link) => document.getElementById(link.href.slice(1)))
+            .filter(Boolean);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) setActiveSection(entry.target.id);
+                });
+            },
+            { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+        );
+        sections.forEach((section) => observer.observe(section));
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            observer.disconnect();
+        };
     }, []);
 
     // 5.5 - Smooth scroll handler
@@ -111,7 +127,9 @@ export default function Header() {
                         {/* 5.2 - CTA Button */}
                         <div className="flex items-center gap-4">
                             <a
-                                href="#"
+                                href={WHATSAPP_ORDER_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-amber-500 text-black font-bold text-sm rounded-full transition-all duration-300 hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.5)] active:scale-95"
                             >
                                 <ShoppingBag size={16} />
@@ -178,7 +196,10 @@ export default function Header() {
 
                                 {/* Mobile CTA */}
                                 <motion.a
-                                    href="#"
+                                    href={WHATSAPP_ORDER_URL}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => setMobileMenuOpen(false)}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.4 }}
