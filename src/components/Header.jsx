@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag } from 'lucide-react';
+import { Menu, X, ShoppingBag, MessageCircle, Phone, Utensils, ChevronDown } from 'lucide-react';
+import { whatsappUrl, telUrl, ifoodUrl } from '../config/site';
 
 const navLinks = [
     { href: '#destaques', label: 'Destaques' },
@@ -10,16 +11,34 @@ const navLinks = [
     { href: '#localizacao', label: 'Localização' },
 ];
 
-// Canal de pedido real usado no projeto (mesmo número/mensagem do FAB e da seção Localização).
-// TODO(cliente): substituir o número placeholder pelo WhatsApp real do restaurante.
-const WHATSAPP_ORDER_URL = `https://wa.me/5543999999999?text=${encodeURIComponent(
-    'Olá! Gostaria de fazer um pedido no Matsuri Container Sushi.'
-)}`;
+// Opções de pedido — mesmos canais do botão flutuante (FAB): WhatsApp, ligação e iFood.
+const orderOptions = [
+    { id: 'whatsapp', label: 'WhatsApp', href: whatsappUrl, icon: MessageCircle, color: 'text-[#25D366]', external: true },
+    { id: 'phone', label: 'Ligar', href: telUrl, icon: Phone, color: 'text-amber-500', external: false },
+    { id: 'ifood', label: 'iFood', href: ifoodUrl, icon: Utensils, color: 'text-[#EA1D2C]', external: true },
+];
 
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('');
+    const [orderOpen, setOrderOpen] = useState(false);
+    const orderRef = useRef(null);
+
+    // Fecha o menu de pedido ao clicar fora ou pressionar Esc
+    useEffect(() => {
+        if (!orderOpen) return;
+        const onDocClick = (e) => {
+            if (orderRef.current && !orderRef.current.contains(e.target)) setOrderOpen(false);
+        };
+        const onEsc = (e) => e.key === 'Escape' && setOrderOpen(false);
+        document.addEventListener('mousedown', onDocClick);
+        document.addEventListener('keydown', onEsc);
+        return () => {
+            document.removeEventListener('mousedown', onDocClick);
+            document.removeEventListener('keydown', onEsc);
+        };
+    }, [orderOpen]);
 
     useEffect(() => {
         // Estado "scrolled": listener passivo + rAF (sem leituras de layout a cada evento de scroll)
@@ -124,17 +143,49 @@ export default function Header() {
                             ))}
                         </nav>
 
-                        {/* 5.2 - CTA Button */}
+                        {/* 5.2 - CTA "Fazer Pedido" com as 3 opções (WhatsApp, Ligar, iFood) */}
                         <div className="flex items-center gap-4">
-                            <a
-                                href={WHATSAPP_ORDER_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-amber-500 text-black font-bold text-sm rounded-full transition-all duration-300 hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.5)] active:scale-95"
-                            >
-                                <ShoppingBag size={16} />
-                                <span>Fazer Pedido</span>
-                            </a>
+                            <div className="relative hidden md:block" ref={orderRef}>
+                                <button
+                                    type="button"
+                                    onClick={() => setOrderOpen((v) => !v)}
+                                    aria-haspopup="menu"
+                                    aria-expanded={orderOpen}
+                                    className="flex items-center gap-2 px-5 py-2.5 bg-amber-500 text-black font-bold text-sm rounded-full transition-all duration-300 hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.5)] active:scale-95"
+                                >
+                                    <ShoppingBag size={16} />
+                                    <span>Fazer Pedido</span>
+                                    <ChevronDown size={14} className={`transition-transform duration-300 ${orderOpen ? 'rotate-180' : ''}`} />
+                                </button>
+
+                                <AnimatePresence>
+                                    {orderOpen && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: -8 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -8 }}
+                                            transition={{ duration: 0.2 }}
+                                            role="menu"
+                                            className="absolute right-0 mt-2 w-56 bg-black/95 backdrop-blur-md border border-white/10 rounded-xl p-2 shadow-[0_10px_40px_rgba(0,0,0,0.6)]"
+                                        >
+                                            {orderOptions.map((opt) => (
+                                                <a
+                                                    key={opt.id}
+                                                    href={opt.href}
+                                                    target={opt.external ? '_blank' : undefined}
+                                                    rel={opt.external ? 'noopener noreferrer' : undefined}
+                                                    onClick={() => setOrderOpen(false)}
+                                                    role="menuitem"
+                                                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white text-sm font-medium hover:bg-white/10 transition-colors"
+                                                >
+                                                    <opt.icon size={18} className={opt.color} aria-hidden="true" />
+                                                    <span>{opt.label}</span>
+                                                </a>
+                                            ))}
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
 
                             {/* 5.3 - Mobile menu button */}
                             <button
@@ -194,20 +245,28 @@ export default function Header() {
                                     </motion.a>
                                 ))}
 
-                                {/* Mobile CTA */}
-                                <motion.a
-                                    href={WHATSAPP_ORDER_URL}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.4 }}
-                                    className="mt-6 w-full flex items-center justify-center gap-2 py-4 bg-amber-500 text-black font-bold text-lg rounded-full hover:bg-amber-400 transition-colors"
-                                >
-                                    <ShoppingBag size={20} />
-                                    <span>Fazer Pedido</span>
-                                </motion.a>
+                                {/* Mobile CTA — 3 opções de pedido (WhatsApp, Ligar, iFood) */}
+                                <div className="mt-6 w-full">
+                                    <p className="text-center text-white/50 text-xs uppercase tracking-[0.3em] mb-3">Fazer Pedido</p>
+                                    <div className="flex flex-col gap-3">
+                                        {orderOptions.map((opt, index) => (
+                                            <motion.a
+                                                key={opt.id}
+                                                href={opt.href}
+                                                target={opt.external ? '_blank' : undefined}
+                                                rel={opt.external ? 'noopener noreferrer' : undefined}
+                                                onClick={() => setMobileMenuOpen(false)}
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 0.4 + index * 0.05 }}
+                                                className="w-full flex items-center justify-center gap-2 py-4 bg-amber-500 text-black font-bold text-lg rounded-full hover:bg-amber-400 transition-colors"
+                                            >
+                                                <opt.icon size={20} aria-hidden="true" />
+                                                <span>{opt.label}</span>
+                                            </motion.a>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </motion.nav>
                     </motion.div>

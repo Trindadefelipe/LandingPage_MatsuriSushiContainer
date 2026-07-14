@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ShoppingBag, Sparkles, Flame, Star } from 'lucide-react';
+import { ifoodUrl } from '../config/site';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -266,7 +267,9 @@ export default function Menu() {
                     className="text-center mt-8"
                 >
                     <a
-                        href="#"
+                        href={ifoodUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-amber-500 hover:text-white transition-colors duration-300 font-medium"
                     >
                         Ver cardápio completo

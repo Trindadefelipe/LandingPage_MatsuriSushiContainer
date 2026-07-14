@@ -1,4 +1,5 @@
 import { Instagram, Facebook, Phone, Mail, MapPin, Clock, ChevronRight } from 'lucide-react';
+import { site, telUrl, mapsDirectionsUrl } from '../config/site';
 
 const navLinks = [
     { href: '#destaques', label: 'Destaques' },
@@ -134,15 +135,15 @@ export default function Footer() {
                                 {/* Address */}
                                 <li>
                                     <a
-                                        href="https://www.google.com/maps/dir/?api=1&destination=Rua+Prefeito+Faria+Lima+1234+Londrina+PR"
+                                        href={mapsDirectionsUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-start gap-3 text-white/60 hover:text-amber-500 transition-colors group"
                                     >
                                         <MapPin size={18} className="text-amber-500/50 group-hover:text-amber-500 mt-0.5 flex-shrink-0" />
                                         <div>
-                                            <p>Rua Prefeito Faria Lima, 1234</p>
-                                            <p className="text-sm">Park Container - Londrina, PR</p>
+                                            <p>{site.address.street}</p>
+                                            <p className="text-sm">{site.address.neighborhood} - {site.address.city}</p>
                                         </div>
                                     </a>
                                 </li>
@@ -150,22 +151,22 @@ export default function Footer() {
                                 {/* Phone */}
                                 <li>
                                     <a
-                                        href="tel:+5543999999999"
+                                        href={telUrl}
                                         className="flex items-center gap-3 text-white/60 hover:text-amber-500 transition-colors group"
                                     >
                                         <Phone size={18} className="text-amber-500/50 group-hover:text-amber-500 flex-shrink-0" />
-                                        <span>(43) 99999-9999</span>
+                                        <span>{site.phoneDisplay}</span>
                                     </a>
                                 </li>
 
                                 {/* Email */}
                                 <li>
                                     <a
-                                        href="mailto:contato@matsurisushi.com.br"
+                                        href={`mailto:${site.email}`}
                                         className="flex items-center gap-3 text-white/60 hover:text-amber-500 transition-colors group"
                                     >
                                         <Mail size={18} className="text-amber-500/50 group-hover:text-amber-500 flex-shrink-0" />
-                                        <span>contato@matsurisushi.com.br</span>
+                                        <span>{site.email}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -174,15 +175,15 @@ export default function Footer() {
                 </div>
             </div>
 
-            {/* Bottom bar */}
-            <div className="border-t border-white/5 py-6">
+            {/* Bottom bar — frase e copyright centralizados; pb extra no mobile p/ o FAB não cobrir */}
+            <div className="border-t border-white/5 py-6 pb-24 md:pb-6">
                 <div className="container mx-auto px-4">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/40">
+                    <div className="flex flex-col items-center gap-2 text-center text-sm text-white/40">
+                        <p className="flex items-center justify-center gap-1">
+                            Feito com <span className="text-red-500">♥</span> em Londrina, PR
+                        </p>
                         <p>
                             © {currentYear} Matsuri Container Sushi. Todos os direitos reservados.
-                        </p>
-                        <p className="flex items-center gap-1">
-                            Feito com <span className="text-red-500">♥</span> em Londrina, PR
                         </p>
                     </div>
                 </div>

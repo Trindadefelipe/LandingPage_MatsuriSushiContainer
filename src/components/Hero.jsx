@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronDown, ChevronLeft, ChevronRight, ShoppingBag, Clock } from 'lucide-react';
+import { ifoodUrl } from '../config/site';
 
 // 6.4 - Banner slides data
 const slides = [
@@ -180,7 +181,9 @@ export default function Hero() {
                     className="flex flex-col sm:flex-row items-center justify-center gap-4"
                 >
                     <a
-                        href="#menu"
+                        href={ifoodUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 px-8 py-4 bg-amber-500 text-black font-bold rounded-full transition-all duration-300 hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] active:scale-95"
                     >
                         <ShoppingBag size={20} />

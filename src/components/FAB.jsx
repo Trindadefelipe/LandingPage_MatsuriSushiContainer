@@ -1,21 +1,16 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Utensils, Phone, X, MessageCircle } from 'lucide-react';
+import { site, whatsappUrl, telUrl, ifoodUrl } from '../config/site';
 
 export default function FAB() {
     const [isOpen, setIsOpen] = useState(false);
     const [hoveredItem, setHoveredItem] = useState(null);
 
-    // Configurações de contato (altere conforme necessário)
-    const whatsappNumber = '5543999999999';
-    const whatsappMessage = encodeURIComponent('Olá! Gostaria de fazer um pedido no Matsuri Container Sushi.');
-    const telefone = '(43) 99999-9999';
-    const ifoodUrl = 'https://www.ifood.com.br/delivery/londrina-pr/matsuri-container-sushi';
-
     const menuItems = [
         {
             id: 'whatsapp',
-            href: `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`,
+            href: whatsappUrl,
             label: 'WhatsApp',
             tooltip: 'Peça pelo WhatsApp',
             icon: MessageCircle,
@@ -25,9 +20,9 @@ export default function FAB() {
         },
         {
             id: 'telefone',
-            href: `tel:+${whatsappNumber}`,
+            href: telUrl,
             label: 'Ligar',
-            tooltip: telefone,
+            tooltip: site.phoneDisplay,
             icon: Phone,
             bgColor: 'bg-matsuri-red',
             hoverColor: 'hover:bg-red-700',
