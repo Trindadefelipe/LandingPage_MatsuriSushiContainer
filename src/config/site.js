@@ -8,8 +8,6 @@ export const site = {
   whatsappMessage: 'Olá! Gostaria de fazer um pedido no Matsuri Container Sushi.',
   ifoodUrl:
     'https://www.ifood.com.br/delivery/londrina-pr/matsuri-conteiner-sushi-conjunto-vivi-xavier/0f644d2d-c535-4342-abd1-c7460901e142',
-  // TODO(cliente): confirmar e-mail real (placeholder mantido)
-  email: 'contato@matsurisushi.com.br',
   address: {
     street: 'Av. Saul Elkind, 3665',
     neighborhood: 'Alto da Boa Vista',

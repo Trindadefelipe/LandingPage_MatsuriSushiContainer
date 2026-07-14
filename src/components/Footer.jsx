@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Phone, Mail, MapPin, Clock, ChevronRight } from 'lucide-react';
+import { Instagram, Phone, MapPin, Clock, ChevronRight } from 'lucide-react';
 import { site, telUrl, mapsDirectionsUrl } from '../config/site';
 
 const navLinks = [
@@ -16,8 +16,7 @@ const scheduleData = [
 ];
 
 const socialLinks = [
-    { icon: Instagram, href: 'https://www.instagram.com/matsurisushi', label: 'Instagram' },
-    { icon: Facebook, href: 'https://www.facebook.com/matsurisushi', label: 'Facebook' },
+    { icon: Instagram, href: 'https://www.instagram.com/matsuricontainersushi', label: 'Instagram' },
 ];
 
 export default function Footer() {
@@ -159,16 +158,6 @@ export default function Footer() {
                                     </a>
                                 </li>
 
-                                {/* Email */}
-                                <li>
-                                    <a
-                                        href={`mailto:${site.email}`}
-                                        className="flex items-center gap-3 text-white/60 hover:text-amber-500 transition-colors group"
-                                    >
-                                        <Mail size={18} className="text-amber-500/50 group-hover:text-amber-500 flex-shrink-0" />
-                                        <span>{site.email}</span>
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                     </div>
